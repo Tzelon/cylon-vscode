@@ -1,0 +1,132 @@
+{
+  "scopeName": "source.cy",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#statement" },
+    { "include": "#expression" }
+  ],
+  "repository": {
+    "expression": {},
+    "statement": {
+      "patterns": [
+        { "include": "#statement-keyword" },
+        { "include": "#variable-declaration" }
+      ]
+    },
+    "statement-keyword": {
+      "patterns": [
+        {
+          "name": "storage.type.function.cylon",
+          "match": "\\b(?<![\\.\\$])(ƒ)(?!\\s*:)\\b"
+        },
+        {
+          "name": "keyword.control.cylon",
+          "match": "\\b(?<![\\.\\$])(break|call|else|if|return|loop|export|import|fail)(?!\\s*:)\\b"
+        },
+        {
+          "name": "storage.operator.mutation.let.cylon",
+          "match": "\\blet\\b"
+        },
+        { "include": "#var" },
+        { "include": "#def" }
+      ]
+    },
+    "variable-declaration": {
+      "name": "meta.variable.declaration.cylon",
+      "begin": "\\s*\\b(var|def)\\s+([[:alpha:]_][[:word:] ]*[[:word:]]\\??)\\s*(\\:)(?!\\s*ƒ)",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type.cylon",
+          "patterns": [{ "include": "#var" }, { "include": "#def" }]
+        },
+        "2": {
+          "name": "variable.other.js"
+        },
+        "3": {
+          "name": "keyword.operator.assignment.cylon"
+        }
+      },
+      "end": "($)",
+      "patterns": [
+        { "include": "#numeric-literal" },
+        { "include": "#string-literal" },
+        { "include": "#statement-keyword" },
+        { "include": "#function-call" }
+      ]
+    },
+
+    "let": {
+      "name": "storage.type.var.cylon",
+      "match": "\\b(var)\\b"
+    },
+    "def": {
+      "name": "storage.type.def.cylon",
+      "match": "\\b(def)\\b"
+    },
+
+    "numeric-literal": {
+      "patterns": [
+        {
+          "match": "(?x)([0-9]+(\\.[0-9]*)?)$",
+          "captures": {
+            "0": { "name": "constant.numeric.decimal.cylon" },
+            "1": { "name": "meta.delimiter.decimal.period.cylon" }
+          }
+        }
+      ]
+    },
+    "string-literal": {
+      "name": "string.quoted.double.cylon",
+      "begin": "\"",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.cylon" }
+      },
+      "end": "(\")|((?:[^\\\\\\n])$)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.string.end.cylon" },
+        "2": { "name": "invalid.illegal.newline.cylon" }
+      },
+      "patterns": [{ "include": "#string-character-escape" }]
+    },
+    "string-character-escape": {
+      "name": "constant.character.escape.cylon",
+      "match": "\\\\(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.|$)"
+    },
+
+    "function-call": {
+      "name": "meta.function-call.cylon",
+      "begin": "([[:alpha:]_][[:word:] ]*[[:word:]]\\??)(\\()",
+      "beginCaptures": {
+        "1": { "name": "entity.name.function.cylon" },
+        "2": { "name": "punctuation.definition.arguments.begin.cylon" }
+      },
+      "end": "(\\))",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.arguments.end.cylon" }
+      },
+      "contentName": "meta.function-call.arguments.cylon",
+      "patterns": [
+        {
+          "name": "punctuation.separator.arguments.cylon",
+          "match": "(,)"
+        }
+      ]
+    },
+
+    "comment": {
+      "name": "comment.line.number-sign.cylon",
+      "begin": "(\\#)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.comment.cylon" }
+      },
+      "end": "($)",
+      "patterns": [{ "include": "#codetags" }]
+    },
+    "codetags": {
+      "match": "(?:\\b(NOTE|XXX|HACK|FIXME|BUG|TODO)\\b)",
+      "captures": {
+        "1": { "name": "keyword.codetag.notation.cylon" }
+      }
+    }
+  }
+}

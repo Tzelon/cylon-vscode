@@ -1,0 +1,94 @@
+{
+  "name": "riot-syntax-highlight",
+  "displayName": "riot-syntax-highlight",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.23.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:cylon"
+  ],
+  "main": "./lsp/client/out/extension",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Example configuration",
+      "properties": {
+        "languageServerExample.maxNumberOfProblems": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Controls the maximum number of problems produced by the server."
+        },
+        "languageServerExample.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the language server."
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "cylon",
+        "extensions": [
+          ".cy"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "cylon",
+        "scopeName": "source.cy",
+        "path": "./syntaxes/cylon.tmGrammar.json"
+      },
+      {
+        "injectTo": [
+          "source.cy",
+          "text.html.basic"
+        ],
+        "scopeName": "inline.lit-html",
+        "path": "./syntaxes/lit-html.tmGrammar.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.html": "html",
+          "meta.embedded.block.css": "css",
+          "source.css": "css"
+        }
+      },
+      {
+        "injectTo": [
+          "source.cy",
+          "text.html.basic"
+        ],
+        "scopeName": "inline.lit-html-svg",
+        "path": "./syntaxes/lit-html-svg.tmGrammar.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.svg": "xml"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "cd lsp/client && npm run update-vscode && cd .. && npm run compile",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "postinstall": "cd lsp/client && npm install && cd ../server && npm install && cd ..",
+    "test": "sh ./scripts/e2e.sh"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.0",
+    "@types/node": "^8.0.0",
+    "tslint": "^5.16.0",
+    "typescript": "^3.5.1"
+  }
+}

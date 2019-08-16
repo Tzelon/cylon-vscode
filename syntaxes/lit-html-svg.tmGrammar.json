@@ -1,0 +1,44 @@
+{
+  "fileTypes": [],
+  "injectionSelector": "L:source.js -comment",
+  "injections": {
+    "L:source": {
+      "patterns": [
+        {
+          "match": "<",
+          "name": "invalid.illegal.bad-angle-bracket.html"
+        }
+      ]
+    }
+  },
+  "patterns": [
+    {
+      "name": "macro.cy.svg",
+      "contentName": "meta.embedded.block.svg",
+      "begin": "(?x)(\\b(?:\\w+\\.)*(?:svg)\\s*)(\\()",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.function.macro.cy"
+        },
+        "2": {
+          "name": "punctuation.definition.macro.begin.cy"
+        }
+      },
+      "end": "(\\))",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.macro.end.cy"
+        }
+      },
+      "patterns": [
+        {
+          "include": "source.ts#template-substitution-element"
+        },
+        {
+          "include": "text.xml"
+        }
+      ]
+    }
+  ],
+  "scopeName": "inline.lit-html-svg"
+}
