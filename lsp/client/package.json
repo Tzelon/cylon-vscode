@@ -1,25 +1,15 @@
 {
-  "name": "lsp-sample-client",
-  "description": "VSCode part of a language server",
-  "author": "Microsoft Corporation",
-  "license": "MIT",
-  "version": "0.0.1",
-  "publisher": "vscode",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/vscode-extension-samples"
-  },
-  "engines": {
-    "vscode": "^1.26.0"
-  },
-  "scripts": {
-    "update-vscode": "vscode-install",
-    "postinstall": "vscode-install"
-  },
-  "dependencies": {
-    "vscode-languageclient": "^4.1.4"
-  },
-  "devDependencies": {
-    "vscode": "^1.1.35"
-  }
+    "name": "cylon-lsp-client",
+    "description": "A language server for Cylon",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.33.0"
+    },
+    "scripts": {},
+    "dependencies": {
+        "vscode-languageclient": "^5.2.1"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.32.0"
+    }
 }
